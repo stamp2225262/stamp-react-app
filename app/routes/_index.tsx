@@ -55,8 +55,8 @@ export default function Index() {
 
 const resources = [
   {
-    href: "https://github.com/stamp2225262/stamp-react-app",
-    text: "Lab01 Default Remix App",
+    href: "http://localhost:5173/",
+    text: "Lab01 24/07/2568",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -76,8 +76,8 @@ const resources = [
     ),
   },
   {
-    href: "https://remix.run/start/tutorial",
-    text: "Lab02 Frist Component",
+    href: "http://localhost:5173/Stamp-Lab02",
+    text: "Lab02 24/07/2568",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -97,8 +97,8 @@ const resources = [
     ),
   },
   {
-    href: "https://github.com/stamp2225262/stamp-react-app",
-    text: "Lab03 Profile Component",
+    href: "http://localhost:5173/Stamp-Lab03",
+    text: "Lab03 24/07/2568",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
