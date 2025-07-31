@@ -1,5 +1,6 @@
 import Profile from "./components/Profile";
 import Contact from "./components/Contact";
+import Footer from "./components/Footer";
 
 export default function MyProflie() {
     return(
@@ -27,7 +28,11 @@ export default function MyProflie() {
         <div className = "ps-5 m-5 pe-5 pt-3 pb-3 bg-blue-300 rounded-2xl text-center w-20 mx-auto px-6 py-2.5 rounded-full cursor-pointer text-white text-sm tracking-wider font-medium border-0 outline-0 outline-none bg-[#333] hover:bg-[#222] active:-[#333]">
             <a href ="http://localhost:5173/">Back </a>
         </div>
+         <Footer 
+         messenger="© 2025 TAMX — สวัสดีครับ ชาวโลก 😜"/>
+         
         </>
+        
     
     )
 }
