@@ -136,5 +136,26 @@ const resources = [
       </svg>
     ),
   },
+  {
+    href: "http://localhost:5173/Stamp-Lab05",
+    text: "Lab05 14/08/2568",
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+        className="stroke-gray-600 group-hover:stroke-current dark:stroke-gray-300"
+      >
+        <path
+          d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" 
+          strokeWidth="1.9"
+          strokeLinecap="round"
+          />
+
+      </svg>
+    ),
+  },
 
 ];
