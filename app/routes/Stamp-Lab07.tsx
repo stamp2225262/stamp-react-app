@@ -1,7 +1,8 @@
 import Hearder from "./components/็Header";
 import Footer from "./components/Footer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import handleRequest from "~/entry.server";
+import Index from "./_index";
 
 export default function MyTermProject () {
     const [book , setBook] = useState({
@@ -11,15 +12,41 @@ export default function MyTermProject () {
         bookAuthor: "TAMX",
         bookCover: "/images/cover.jpg"
     });
-    const [nextId, setNextId] = useState(0);
+    const [nextId, setNextId] = useState(1); // จาก 0 เป็น 1
     const [books, setBooks] = useState([]);
+    const [bookId , setBookId] = useState(0); // ข้อมูล ID ที่ต้องการดำเนินการ
+    const [count , setCount] = useState(0); // ข้อมูล ID ที่ต้องการดำเนินการ
+
     
+    useEffect(() => {
+        setCount(books.length)
+    },[books.length]);
+
 
     // info Student
     const myPage = "TAMX Term Project";
     const myName = "Atthapron Samangyad";
     const myStudID = "026730491003-2";
+
     
+
+    const deleteBook = (bookId) => {
+      setBooks(
+        books.filter((bTmp,Index) =>
+          bTmp.id !== bookId
+       )
+      );
+    }
+
+
+    const editBook = (bookId) => {
+      const bookTmp = books.filter(bTmp => 
+        bTmp.id === bookId
+      )
+      setBook(bookTmp[0]);
+      setBookId(bookId);
+
+    }
      
     const handleTitleChange = (e) => {
         setBook({
@@ -81,6 +108,8 @@ export default function MyTermProject () {
 
     }
 
+        
+
 
     const bookItems = books.map((bObj, index) => 
         <div className="max-w-sm bg-white border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
@@ -94,8 +123,15 @@ export default function MyTermProject () {
              <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{bObj.bookDesc}</p>
                 <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">ราคา: {bObj.bookPrice} บาท</p>
                 <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">ผู้แต่ง: {bObj.bookAuthor}</p>
-              <a href="#" className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-red-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              <a href="#" className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-red-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 m-1"
+              onClick={(e) => deleteBook(bObj.id)}>
                 [D] Delete
+              </a>
+            <a href="#">
+             </a>
+              <a href="#" className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-orange-700 rounded-lg hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-blue-800"
+              onClick={(e) => editBook(bObj.id)}>
+                [E] Edit
               </a>
             </div>
           </div>
@@ -105,17 +141,64 @@ export default function MyTermProject () {
     //     alert("คุณเลือกสำเร็จ")
     // }
     
-
+const updateBook = () => {
+              alert("Update:" + bookId)
+              const bookTmp = books.map(bTmp => 
+                bTmp.id === bookId ?
+                {
+            ...bTmp,
+                id: nextId,
+                bookTitle: book.bookTitle,
+                bookDesc: book.bookDesc,
+                bookPrice: book.bookPrice,
+                bookAuthor: book.bookAuthor,
+                bookCover: book.bookCover
+          
+                }
+        :
+        bTmp        
+          )
+          setBooks(bookTmp);
+          resetForm();
+          setBookId(0);
+        }
 
     
+function BookDashboard(){
+              return (
+                <div className="lg:w-1/4 md:w-1/2 sm:w-full grid grid-cols-1 m-4">
+                  <div className="md:col-span-1 bg-white rounded-lg shadow-md p-4 grid grid-cols-2 text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800">
+                    <div>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-16">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <span className="sr-only">Info</span>
+                      <div className="text-center">
+                        <span className="text-7xl">{count}</span>
+                      </div>
+                      <div className="text-center">
+                        Number of books
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            }
+
 
     return (
+
         <>
          <Hearder messenger={myPage}/>
          <p className="text-xl m-3 text-center">
             Name: {myName} <br /> Student ID: {myStudID}
          </p>
-    
+          <div className="mx-auto flex justify-center">
+            <BookDashboard/>
+          </div>
+
             <div className="w-1/2 grid mx-auto h-100 overflow-hide rounded-2xl border border-gray-300 m-2 flex justify-center grid grid-cols-2 gap-2">
             
               <form className="m-5 pr-20 max-w-sm mx-auto flex-none">
@@ -147,6 +230,7 @@ export default function MyTermProject () {
             />
           </div>
           <div className="mb-5">
+          
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ชื่อผู้แต่ง (Author)</label>
             <input
               value= {book.bookAuthor}
@@ -162,14 +246,23 @@ export default function MyTermProject () {
               className="bg-gray-50 border border-gray-300 mx-auto text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
           </div>
-           <button type="button" className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-        onClick = {addBook}>
-            เพิ่มหนังสือ
-        </button>
          <button type="button" className="text-white bg-gradient-to-r from-red-500 to-pink-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
         onClick = {resetForm}>
             รีเซ็ตหนังสือ
         </button>
+         {
+            bookId !== 0 ?
+         <button type="button" className="text-white bg-gradient-to-r from-red-500 to-pink-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+        onClick = {updateBook}>
+            อัพเดทหนังสือ
+        </button>
+        :
+         <button type="button" className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+        onClick = {addBook}>
+            เพิ่มหนังสือ
+        </button>
+            }
+      
         </form>
 
           <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
@@ -191,8 +284,13 @@ export default function MyTermProject () {
               </a>
             </div>
           </div>
+
+          
     
     </div>
+        <div className="bg-red-300 w-100 mx-auto h-100">
+          รายการหนังสือใหม่
+        </div>
      <div className="mx-auto grid overflow-flex border rounded-lg w-1/2">
         <div className="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-4 gap-4 p-4 flex ">
           {bookItems}
